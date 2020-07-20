@@ -42,8 +42,12 @@ class User(db.Model, UserMixin):
     return User.query.filter_by(username = username).first()
 
   @classmethod
-  def get_by_id(self, id):
+  def get_by_id(cls, id):
     return User.query.filter_by(id = id).first
+
+  @classmethod
+  def get_by_email(cls, email):
+    return User.query.filter_by(email = email).first
 
 
 
