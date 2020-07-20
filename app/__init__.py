@@ -30,7 +30,7 @@ def create_app(config):
   login_manager.login_message = 'Es Necesario Iniciar Sesion'
 
   app.register_blueprint(page)
-  
+
   with app.app_context():
     db.init_app(app)
     db.create_all()

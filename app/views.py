@@ -3,13 +3,16 @@ from flask import render_template, request, redirect, url_for, abort, flash
 
 from flask_login import login_user, logout_user, login_required, current_user
 
-from .forms import LoginForm
+from .forms import LoginForm, RegisterForm
 from .models import User
 
 from . import login_manager
 
 page = Blueprint('page', __name__)
 
+@login_manager.user_loader
+def load_user(id):
+  return User.get_by_id(id)
 
 @page.route('/')
 def index():
@@ -32,4 +35,13 @@ def login_user():
 
 @page.route('/register', methods = ['GET','POST'])
 def register_user():
-  
+  form = RegisterForm(request.form)
+
+  if request.method == 'POST' and form.validate():
+      user = User.createElement(form.username.data, form.password.data, form.email.data)
+      flash('Usuario Registrado Existosamente')
+      login_user(user)
+      return redirect(url_for('index'))
+
+  return render_template('auth/register.html', title = 'Registro', form = form, active = 'register_user')
+
