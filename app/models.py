@@ -32,22 +32,24 @@ class User(db.Model, UserMixin):
 
   @classmethod
   def createElement(cls, username, password, email):
-    user = User(username = username, password = password, email = email)
+    user = User(username=username, password=password, email=email)
 
     db.session.add(user)
     db.session.commit()
 
-  @classmethod
-  def get_by_username(cls, username):
-    return User.query.filter_by(username = username).first()
+    return user
 
   @classmethod
-  def get_by_id(cls, id):
-    return User.query.filter_by(id = id).first
+  def get_by_username(cls, username):
+    return User.query.filter_by(username=username).first()
 
   @classmethod
   def get_by_email(cls, email):
-    return User.query.filter_by(email = email).first
+    return User.query.filter_by(email=email).first()
+
+  @classmethod
+  def get_by_id(cls, id):
+    return User.query.filter_by(id=id).first()
 
 
 

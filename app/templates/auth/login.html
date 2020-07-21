@@ -1,23 +1,25 @@
 {% extends 'index.html' %}
 
-
-{% block title %}
-Login
-{% endblock title %}
-
+{% from 'helpers/_forms.html' import render_field %}
 
 {% block content %}
-
 <div class="container">
-  <h1 class="display4">Login de Usuario</h1>
+  <h1 class="display-1">Login</h1>
+  <form class="" method="POST">
 
-  <form action="" method="post">
-    
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" >
+
+      <div class="form-group">
+          {{ render_field(form.username, class='form-control', placeholder='username') }}
+      </div>
+
+      <div class="form-group">
+          {{ render_field(form.password, class='form-control', placeholder='password') }}
+      </div>
+
+      <button type="submit" class="btn btn-primary" name="Button">Login</button>
   </form>
-
 </div>
-
-
 {% endblock content %}
 
 
