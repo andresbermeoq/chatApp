@@ -4,13 +4,17 @@ from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_wtf.csrf import CSRFProtect
+from flask_socketio import SocketIO
 
 app = Flask(__name__)
 
 bootstrap = Bootstrap()
 db = SQLAlchemy()
 login_manager = LoginManager()
+socketio = SocketIO()
 csrf = CSRFProtect()
+
+
 
 
 from .views import page
@@ -22,6 +26,11 @@ def create_app(config):
 
   bootstrap.init_app(app)
   csrf.init_app(app)
+
+
+  socketio.init_app(app, message_queue=app.config['SOCKETIO_MESSAGE_QUEUE'])
+
+
 
   app.app_context().push()
 

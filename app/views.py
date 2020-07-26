@@ -1,14 +1,17 @@
+from time import localtime, strftime
 from flask import Blueprint
 from flask import render_template, request, redirect, url_for, abort, flash
-
+from flask_socketio import SocketIO, send
 from flask_login import login_user,logout_user,login_required, current_user
 
 from .forms import LoginForm, RegisterForm
 from .models import User
 
-from . import login_manager
+from . import login_manager, socketio
 
 page = Blueprint('page', __name__)
+
+
 
 @login_manager.user_loader
 def load_user(id):
@@ -22,20 +25,21 @@ def index():
 def logout():
     logout_user()
     flash('Sesion Cerrada')
-    return redirect(url_for('.login'))
+    return redirect(url_for('.index'))
 
 @page.route('/login', methods=['GET','POST'])
 def login():
 
     if current_user.is_authenticated:
         return redirect(url_for('.chat_app'))
-        
+
     form = LoginForm(request.form)
 
     if request.method == 'POST' and form.validate():
         user = User.get_by_username(form.username.data)
         if user and user.verify_password(form.password.data):
             login_user(user)
+            return redirect(url_for('.chat_app'))
             flash('Usuario Registrado Correctamente')
         else:
             flash('Usuario o Password Invalidos', 'error')
@@ -57,4 +61,14 @@ def register_user():
 @page.route('/chat')
 @login_required
 def chat_app():
-  return render_template('chat/chat.html', title = 'Chat', active = 'Chat')
+  users = User.query.all()
+  return render_template('chat/chat.html', title = 'Chat', users = users,
+                                           active = 'Chat')
+
+
+@socketio.on('message')
+def message(data):
+
+  print('Received Message: ' + str(data))
+  send({'msg': data['msg'], 'username': data['username'],
+        'time_stamp': strftime('%b-%d %I:%M%p', localtime())})

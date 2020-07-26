@@ -51,6 +51,10 @@ class User(db.Model, UserMixin):
   def get_by_id(cls, id):
     return User.query.filter_by(id=id).first()
 
+  @classmethod
+  def is_active(self):
+    return self.is_active
+
 
 
 

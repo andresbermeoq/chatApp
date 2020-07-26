@@ -17,14 +17,29 @@
         <a class="nav-link" href="{{ url_for('.index')  }}">Home <span class="sr-only">(current)</span></a>
       </li>
     </ul>
-    <form class="form-inline my-2 my-lg-0" action="{{ url_for('.register_user')}}">
-      <button class="btn btn-outline-light btn-lg" type="submit">Registro</button>
-    </form>
-    &nbsp;
-    <form class="form-inline my-2 my-lg-0" action="{{ url_for('.login')}}">
-      <button class="btn btn-outline-light btn-lg" type="submit">Login</button>
-    </form>
-    <ul></ul>
+
+
+    {% if current_user.is_authenticated %}
+      <form class="form-inline my-2 my-lg-0" action="{{ url_for('.chat_app')}}">
+        <button class="btn btn-outline-light btn-lg" type="submit">Chat</button>
+      </form>
+      &nbsp;
+      <form class="form-inline my-2 my-lg-0" action="{{ url_for('.logout')}}">
+        <button class="btn btn-outline-light btn-lg" type="submit">Salir</button>
+      </form>
+      <ul></ul>
+    {% else %}
+      <form class="form-inline my-2 my-lg-0" action="{{ url_for('.register_user')}}">
+        <button class="btn btn-outline-light btn-lg" type="submit">Registro</button>
+      </form>
+      &nbsp;
+      <form class="form-inline my-2 my-lg-0" action="{{ url_for('.login')}}">
+        <button class="btn btn-outline-light btn-lg" type="submit">Login</button>
+      </form>
+      <ul></ul>
+    {% endif %}
+
+
   </div>
 </nav>
 
@@ -52,9 +67,38 @@
     </div>
   </div>
 </center>
+
+<div class="row">
+
+    <div class="col-md-12 col-md-offset-1">
+            {% with messages = get_flashed_messages(with_categories=True) %}
+
+            {% if messages %}
+
+                {% for category, message in messages %}
+                    {% if category == 'error' %}
+                        <div class="alert alert-danger" role="alert">
+                            {{ message }}
+                        </div>
+                    {% else %}
+                        <div class="alert alert-success" role="alert">
+                            {{ message }}
+                        </div>
+                    {% endif %}
+                {% endfor %}
+
+            {% endif %}
+
+            {% endwith %}
+    </div>
+        {% block container %}
+        {% endblock %}
+  </div>
 </div>
 
+<div class="container">
 
+</div>
 
 {% endblock content %}
 
