@@ -12,34 +12,39 @@
 <hr>
 <div class="container">
   <h2 class="display-4"> Bienvenido {{ current_user.username }}</h2>
+
+
   <div class="row">
 
     <div class="col-sm">
-      <div class="list-group">
-        {% for user in users  %}
-        <button type="button" class="list-group-item list-group-item-action">
-          {% if current_user.is_active %}
-            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-chat-right-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-              <path fill-rule="evenodd" d="M14 0a2 2 0 0 1 2 2v12.793a.5.5 0 0 1-.854.353l-2.853-2.853a1 1 0 0 0-.707-.293H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h12z"/>
-            </svg>
-          {% endif %}
-          &nbsp;
-          {{ user }}
-        </button>
+
+      <div id="display-messages" class="card" style="width: 18rem;">
+
+      </div>
+
+      <hr>
+
+      <div class="input-group mb-3">
+        <input type="text" class="form-control" placeholder="Ingrese su Mensaje...." aria-label="Recipient's username" aria-describedby="button-addon2" id="message">
+        <div class="input-group-append">
+          <button class="btn btn-outline-secondary" type="button" id="sendButton">Enviar</button>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="col col-lg-2">
+
+
+
+      <nav id="sidebar">
+        <h4>Usuarios</h4>
+        {% for room in rooms  %}
+          <p class="select-room">{{ room }}</p>
         {% endfor %}
-      </div>
-    </div>
+      </nav>
 
-    <div class="col-sm">
-      <div id="display-messages">
 
-      </div>
-    </div>
-
-    <div class="col-sm">
-
-      <input type="text" id="message">
-      <button id="sendButton">Enviar</button>
 
   </div>
 </div>
@@ -59,6 +64,8 @@
  <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js" integrity="sha256-yr4fRk/GU1ehYJPAs8P4JlTgu0Hdsp4ZKrx8bDEDC3I=" crossorigin="anonymous"></script>
 <!--Archivos JS Random-->
 <script src="{{ url_for('static', filename='js/socketio.js') }}"></script>
+<script src="{{ url_for('static', filename='js/buttons.js') }}"></script>
+
 
 
 
