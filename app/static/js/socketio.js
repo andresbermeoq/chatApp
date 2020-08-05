@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let newRoom = p.innerHTML;
         // Check if user already in the room
         if (newRoom === room) {
-            msg = `Usted ya se Encuentra en ${room}.`;
+            msg = `Usted ya se Encuentra chateando con ${room}.`;
             printSysMsg(msg);
         } else {
             leaveRoom(room);

@@ -1,11 +1,11 @@
-
+import os
 class Config:
-  SECRET_KEY = 'chat'
+  SECRET_KEY = os.environ.get('SECRET')
 
 
 class DevelopmentConfig(Config):
-  DEBUG = True
-  SQLALCHEMY_DATABASE_URI = 'mysql://local:Cuenca123.@localhost/chat'
+  DEBUG = False
+  SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
   SQLALCHEMY_TRACK_MODIFICATIONS = False
   SOCKETIO_MESSAGE_QUEUE = None
 
