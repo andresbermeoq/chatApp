@@ -6,18 +6,45 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
   socket.on('message', data => {
-    const p = document.createElement('div');
-    const span_username = document.createElement('strong');
-    const span_timestamp = document.createElement('span');
+    const p = document.createElement('p');
+    const span_username = document.createElement('h4');
+    const span_timestamp = document.createElement('h6');
+    const span_message = document.createElement('p');
     const br = document.createElement('br');
 
     if(data.username){
-      p.setAttribute("class", "my-msg");
-      span_username.setAttribute("class", "my-username");
+      p.setAttribute("class", "my-msg card bg-light mb-3");
+      p.setAttribute("style", "width: 18rem;");
+
+      span_username.setAttribute("class", "card-header");
       span_username.innerHTML = data.username;
-      span_timestamp.setAttribute("class", "timestamp");
+
+      span_timestamp.setAttribute("class","card-title");
       span_timestamp.innerHTML = data.time_stamp;
-      p.innerHTML = span_username.outerHTML + br.outerHTML + data.msg + br.outerHTML + span_timestamp.outerHTML;
+
+      span_message.setAttribute("class", "card-text");
+      span_message.innerHTML = data.msg;
+
+
+      p.innerHTML = span_username.outerHTML + span_timestamp.outerHTML + br.outerHTML + span_message.outerHTML;
+
+      document.querySelector('#display-messages').append(p);
+    } else if (typeof data.username != 'undefined') {
+      p.setAttribute("class", "my-msg bg-info mb-3");
+      p.setAttribute("style", "width: 18rem;");
+
+      span_username.setAttribute("class", "card-header");
+      span_username.innerHTML = data.username;
+
+      span_timestamp.setAttribute("class","card-title");
+      span_timestamp.innerHTML = data.time_stamp;
+
+      span_message.setAttribute("class", "card-text");
+      span_message.innerHTML = data.msg;
+
+
+      p.innerHTML = span_username.outerHTML + span_timestamp.outerHTML + br.outerHTML + span_message.outerHTML;
+
       document.querySelector('#display-messages').append(p);
     } else {
       printSysMsg(data.msg);
@@ -65,6 +92,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function printSysMsg(msg) {
     const p = document.createElement('p');
+    p.setAttribute("class", "h6");
     p.innerHTML = msg;
     document.querySelector('#display-messages').append(p);
   }

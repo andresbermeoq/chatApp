@@ -66,7 +66,6 @@ def chat_app():
   return render_template('chat/chat.html', title = 'Chat', users = users,
                                            active = 'Chat', rooms = ROOMS)
 
-clients = []
 
 @socketio.on('message')
 def message(data):
@@ -76,20 +75,11 @@ def message(data):
         'time_stamp': strftime('%b-%d %I:%M%p', localtime())},
         room = data['room'])
 
-@socketio.on('connect', namespace='/chat')
-def connect():
-    clients.append(request.namespace)
-
-@socketio.on('disconnect', namespace='/chat')
-def user_disconnect():
-    print(strftime("%Y-%m-%d %H:%M:%S") + ' - Client disconnected.')
-    clients.remove(request.namespace)
-
 @socketio.on('join')
 def join(data):
   room = data['room']
   join_room(room)
-  send({'msg': data['username'] + " Ha Entrado a " + data['room']},
+  send({'msg': data['username'] + " Estas Chateando con " + data['room']},
       room = data['room'])
 
 @socketio.on('leave')
@@ -98,6 +88,5 @@ def leave(data):
   leave_room(room)
   send({'msg': data['username'] + "Estas Saliendo de " + data['room']},
       room = data['room'])
-  clients.remove(data['username'])
 
 

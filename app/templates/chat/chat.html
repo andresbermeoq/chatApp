@@ -18,9 +18,11 @@
 
     <div class="col-sm">
 
-      <div id="display-messages" class="card" style="width: 18rem;">
 
-      </div>
+        <div id="display-messages" >
+
+        </div>
+
 
       <hr>
 
@@ -35,16 +37,12 @@
 
     <div class="col col-lg-2">
 
-
-
       <nav id="sidebar">
-        <h4>Usuarios</h4>
-        {% for user in users  %}
-          <p class="select-room">{{ user }}</p>
+        <p class="h4">Salas de Chat</p>
+        {% for room in rooms  %}
+          <p class="select-room list-group-item list-group-item-action">{{ room|title }}</p>
         {% endfor %}
       </nav>
-
-
 
   </div>
 </div>

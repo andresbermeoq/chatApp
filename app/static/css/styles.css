@@ -1,0 +1,14 @@
+.my-msg {
+  margin-left:7em;
+  margin-right:1em;
+  padding: 0.5em 0.5em 0.5em 1em;
+  border-radius: 5px;
+  border-color: #206ED2;
+  border-width: 1px;
+  border-style: solid;
+  /* animation */
+  animation-name: fadeIn;
+  animation-duration: 0.75s;
+  animation-fill-mode: forwards;
+  animation-timing-function: ease-in-out;
+}
